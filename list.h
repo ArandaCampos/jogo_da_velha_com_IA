@@ -13,5 +13,6 @@
 
     void freeList(pList);
     pList insert(pList, int);
+    pList removeItem(pList, int);
 
 #endif

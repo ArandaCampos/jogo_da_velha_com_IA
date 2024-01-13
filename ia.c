@@ -20,6 +20,42 @@ const int WINNER[8][3] = {
     {6, 7, 8},
 };
 
+int randomSelection(pList chances)
+{
+    int key = 0;
+    pList aux = chances;
+
+    for (;aux != NULL; aux = aux->next ) key++;
+
+    srand( (unsigned)time(NULL) );
+    key = rand() % key;
+
+    for (; key != 0; key-- ) chances = chances->next;
+
+    return chances->n;
+}
+
+pList getGreaterChances(pList chance)
+{
+    pList aux = NULL;
+
+    for (aux = chance->next; aux != NULL; aux = aux->next)
+    {
+        if (aux->notLose / (aux->notLose + aux->lose) > chance->notLose / (chance->notLose + chance->lose))
+        {
+            chance = removeItem(chance, chance->n);
+            aux = chance;
+        }
+        else if (aux->notLose / (aux->notLose + aux->lose) < chance->notLose / (chance->notLose + chance->lose))
+        {
+            chance = removeItem(chance, aux->n);
+            aux = chance;
+        }
+    }
+
+    return chance;
+}
+
 int isThereWinner(int game[])
 {
     for (int i = 0; i < 8; i++)
@@ -81,7 +117,6 @@ int getMove(int game[])
 {
 
     int n = 0;
-    float score = 0.0;
     pList chances = NULL,
           aux   = NULL;
 
@@ -94,14 +129,8 @@ int getMove(int game[])
         game[aux->n] = 0;
     }
 
-    for ( aux = chances; aux != NULL; aux = aux->next )
-    {
-        if ( score <= (aux->notLose / (aux->notLose + aux->lose)) )
-        {
-            n = aux->n;
-            score = aux->notLose / (aux->notLose + aux->lose);
-        }
-    }
+    chances = getGreaterChances(chances);
+    n = randomSelection(chances);
 
     freeList(chances);
 
