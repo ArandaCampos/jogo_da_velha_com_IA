@@ -30,7 +30,7 @@ E está pronto para usá-lo 💻
 
 #### Análise do algoritmo
 
-  O algoritmo de Inteligência Artificial, ao receber de entrada o estado atual do jogo, simula todas os arranjos possíveis até o fim do jogo. A partir destas simulações, a IA contabiliza os casos de "não derrotas" (&alpha;) e "derrotas" (&phi;). Ao final, calcula as chances de não derrota de cada jogada.</br>
+  O algoritmo de Inteligência Artificial, ao receber de entrada o estado atual da partida, simula todas os arranjos possíveis. A partir destas simulações, contabiliza os casos de "não derrotas" (&alpha;) e "derrotas" (&phi;) e, ao final, calcula as chances de não derrota de cada jogada.</br>
 
   chance de não derrota = $\sum (&alpha;) \div \sum (&alpha; + &phi;)$
 
