@@ -30,9 +30,9 @@ E está pronto para usá-lo 💻
 
 #### Análise do algoritmo
 
-  O algoritmo de Inteligência Artificial, ao receber de entrada o estado atual do jogo, simula todas as jogadas possíveis até o fim do jogo. A partir disso, a IA contabiliza as "derrotas" e "não derrotas" que, ao final, serão convertidos em chances de não derrota.</br>
+  O algoritmo de Inteligência Artificial, ao receber de entrada o estado atual do jogo, simula todas os arranjos possíveis até o fim do jogo. A partir destas simulações, a IA contabiliza os casos de "não derrotas" (&alpha;) e "derrotas" (&phi;). Ao final, calcula as chances de não derrota de cada jogada.</br>
 
-  chance de não perder = $\sum (Não derrotas) \div \sum (Todas as partidas)$
+  chance de não derrota = $\sum (&alpha;) \div \sum (&alpha; + &phi;)$
 
   A jogada que obtiver a maior chance de não derrota será escolhida.
 
@@ -42,4 +42,4 @@ E está pronto para usá-lo 💻
 
 #### Análise dos resultados
 
-  O algoritmo consegue responder bem a maioria dos contextos. Em raros casos onde a derrota e não derrota estão eminente, ele opta pela primeira opção, permitindo que o jogo resulte em empate - "velha" - ao inveś da vitória. Ademais, a IA consegue se defender e realizar jogadas complexas (aquelas que necessitam de 4 rodadas para serem concluídas, como a do gif acima).
+  O algoritmo consegue responder bem a maioria dos contextos. Em raros casos onde a derrota e não derrota estão eminente, ele opta pela primeira opção, permitindo que o jogo resulte em empate - "velha" - ao invés de vitória. Ademais, a IA consegue se defender e realizar jogadas complexas (aquelas que necessitam de 4 rodadas para serem concluídas, como a do gif acima).
