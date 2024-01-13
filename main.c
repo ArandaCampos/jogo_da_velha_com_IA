@@ -1,4 +1,4 @@
-#include "guloso.h"
+#include "ia.h"
 
 int main()
 {
@@ -7,14 +7,13 @@ int main()
         0, 0, 0,
         0, 0, 0
     };
-    int player, win, round, run;
-
-    while (run == 1)
-    {
-        player = 1,
+    int player = 1,
         win    = 0,
         round  = 0,
         run    = 1;
+
+    while (run == 1)
+    {
 
         for (int i = 0; i < 9; i++)
             game[i] = 0;
@@ -31,6 +30,11 @@ int main()
 
             round++;
         }
+        // reinicia as variáveis
+        player = 1;
+        win    = 0;
+        round  = 0;
+
         printf("\nPressione 1 para jogar novamente ou 0 para finalizar: ");
         scanf("%d", &run);
     }

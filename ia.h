@@ -1,5 +1,5 @@
-#ifndef GULOSO_H
-    #define GULOSO_H
+#ifndef IA_H
+    #define IA_H
 
     #include <stdio.h>
     #include <stdlib.h>
