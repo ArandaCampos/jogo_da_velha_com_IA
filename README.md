@@ -30,7 +30,7 @@ E está pronto para usá-lo 💻
 
 #### Análise do algoritmo (MiniMax)
 
-&emsp;Com posse do estado atual da partida, o algoritmo  verifica se há uma movimentação para ganhar a partida já na próxima rodada (melhor caso). Caso não haja, ele realiza as demais jogadas possíveis e verifica se houve ganhador. Esta lógica é repetida até que haja um ganhador ou cesse todas as jogadas.</br>
+&emsp;Com posse do estado atual da partida, o algoritmo  verifica se existe uma movimentação para ganhar já na próxima rodada (melhor caso). Caso não haja, ele realiza as demais jogadas possíveis e volta a analisa o novo estado da partida. Esta lógica é repetida até que haja um ganhador ou cesse todas as jogadas.</br>
 &emsp;Ao fim, o código agrupa as movimentações em "derrotas" (&beta;) e "não derrotas" (&alpha;) e calcula a "chance de não derrota" (&gamma;).
 
 &gamma; = $\sum (&alpha;) \div \sum (&alpha; + &phi;)$
