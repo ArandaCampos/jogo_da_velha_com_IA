@@ -1,5 +1,5 @@
 ## Jogo da Velha com IA
-![Badge de licença](http://img.shields.io/static/v1?label=LICENÇA&message=GNU&color=sucess&style=for-the-badge)   ![Badge Concluido](http://img.shields.io/static/v1?label=STATUS&message=CONCLUIDO&color=sucess&style=for-the-badge)   ![Badge versionamento](http://img.shields.io/static/v1?label=VERSAO&message=1.2&color=sucess&style=for-the-badge)
+![Badge de licença](http://img.shields.io/static/v1?label=LICENÇA&message=GNU&color=sucess&style=for-the-badge)   ![Badge Concluido](http://img.shields.io/static/v1?label=STATUS&message=CONCLUIDO&color=sucess&style=for-the-badge)   ![Badge versionamento](http://img.shields.io/static/v1?label=VERSAO&message=1.3&color=sucess&style=for-the-badge)
 
 ### Sobre
 
@@ -28,18 +28,28 @@ E está pronto para usá-lo 💻
 
 ### Conclusões
 
-#### Análise do algoritmo
+#### Análise do algoritmo (MiniMax)
 
-  O algoritmo de Inteligência Artificial, ao receber de entrada o estado atual da partida, simula todas os arranjos possíveis. A partir destas simulações, contabiliza os casos de "não derrotas" (&alpha;) e "derrotas" (&phi;) e, ao final, calcula as chances de não derrota de cada jogada.</br>
+&emsp;Com posse do estado atual da partida, o algoritmo  verifica se há uma movimentação para ganhar a partida já na próxima rodada (melhor caso). Caso não haja, ele realiza as demais jogadas possíveis e verifica se houve ganhador. Esta lógica é repetida até que haja um ganhador ou cesse todas as jogadas.</br>
+&emsp;Ao fim, o código agrupa as movimentações em "derrotas" (&beta;) e "não derrotas" (&alpha;) e calcula a "chance de não derrota" (&gamma;).
 
-  chance de não derrota = $\sum (&alpha;) \div \sum (&alpha; + &phi;)$
+&gamma; = $\sum (&alpha;) \div \sum (&alpha; + &phi;)$
 
-  A jogada que obtiver a maior chance de não derrota será escolhida.
+&emsp;A movimentação com maior chance de não derrota (&gamma;) será escolhida.
 
 #### Complexidade de tempo
 
   - O(n!)
 
-#### Análise dos resultados
+#### Análise dos resultados (v 1.3)
 
-  O algoritmo consegue responder bem a maioria dos contextos. Em raros casos onde a derrota e não derrota estão eminente, ele opta pela primeira opção, permitindo que o jogo resulte em empate - "velha" - ao invés de vitória. Ademais, a IA consegue se defender e realizar jogadas complexas (aquelas que necessitam de 4 rodadas para serem concluídas, como a do gif acima).
+  - Resultados:</br>
+
+
+Resultado | 1ª | 2ª | 3ª | 4ª | 5ª | 6ª | 7ª | 8ª | 9ª | 10ª | (%) |
+--------- | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
+`Vitória` | - | - | - | - | x | - | - | x | - | - |  `20%` |
+`Derrota` | - | - | - | - | - | - | - | - | - | - |  ` 0%` |
+`Empate`  | x | x | x | x | - | x | x | - | x | x |  `80%` |
+
+  - O algoritmo consegue responder bem a todos os contextos, alternando-se entre momentos agressivos e defensivos conforme a necessidade. Além disso, ele consegue realizar jogadas complexas - com 4 etapas até a conclusão - e defender-se delas.
