@@ -35,25 +35,57 @@ int randomSelection(pList chances)
     return chances->n;
 }
 
-pList getGreaterChances(pList chance)
+pList calculateChances(pList options)
+{
+    pList aux = options;
+
+    for (; options != NULL; options = options->next)
+    {
+        if (options->notLose + options->lose == 0) options->lose = 1.0;
+        options->chance = options->notLose / (options->notLose + options->lose);
+    }
+
+    return aux;
+}
+
+pList getGreaterChances(pList options)
 {
     pList aux = NULL;
 
-    for (aux = chance->next; aux != NULL; aux = aux->next)
+    for (aux = options->next; aux != NULL; aux = aux->next)
     {
-        if (aux->notLose / (aux->notLose + aux->lose) > chance->notLose / (chance->notLose + chance->lose))
+        if (aux->chance > options->chance)
         {
-            chance = removeItem(chance, chance->n);
-            aux = chance;
+            options = removeItem(options, options->n);
+            aux = options;
         }
-        else if (aux->notLose / (aux->notLose + aux->lose) < chance->notLose / (chance->notLose + chance->lose))
+        else if (aux->chance < options->chance)
         {
-            chance = removeItem(chance, aux->n);
-            aux = chance;
+            options = removeItem(options, aux->n);
+            aux = options;
         }
     }
 
-    return chance;
+    return options;
+}
+
+int canWinNextRound(int game[], int player)
+{
+    int opponent = 0;
+
+    if (player == 1) opponent = 2;
+    else opponent = 1;
+
+    for (int i = 0; i < 8; i++)
+    {
+        if (game[WINNER[i][0]] != opponent && game[WINNER[i][1]] != opponent && game[WINNER[i][2]] != opponent)
+        {
+            if (game[WINNER[i][0]] == game[WINNER[i][1]] && game[WINNER[i][0]] == player) return 1;
+            else if (game[WINNER[i][0]] == game[WINNER[i][2]] && game[WINNER[i][0]] == player) return 1;
+            else if (game[WINNER[i][1]] == game[WINNER[i][2]] && game[WINNER[i][1]] == player) return 1;
+        }
+    }
+    return 0;
 }
 
 int isThereWinner(int game[])
@@ -82,25 +114,36 @@ void getChance(int game[], pList chance, int player)
 {
     pList move = NULL;
 
+    move = takeTheEmptyOnes(game);
+
     // Há ganhador
     if (isThereWinner(game) == 1)
     {
-        if (player == 2) chance->notLose += 1;
-        else chance->lose += 1;
+        if (player == 2)
+            chance->notLose += length(move) + 1;
+        else
+            chance->lose += length(move) + 1;
+        freeList(move);
         return;
     }
-
-    move = takeTheEmptyOnes(game);
-    // Caso tabuleiro cheio, retorne
+    // Em caso de velha
     if (move == NULL)
-    {
         chance->notLose += 1;
-        return;
-    }
 
     // Inverte o jogador
     if (player == 1) player = 2;
     else player = 1;
+
+    // Há vitória eminente
+    if (canWinNextRound(game,player) == 1)
+    {
+        if (player == 2)
+            chance->notLose += length(move) + 1;
+        else
+            chance->lose += length(move) + 1;
+        freeList(move);
+        return;
+    }
 
     for (; move != NULL; move = move->next)
     {
@@ -117,22 +160,23 @@ int getMove(int game[])
 {
 
     int n = 0;
-    pList chances = NULL,
+    pList options = NULL,
           aux   = NULL;
 
-    chances = takeTheEmptyOnes(game);
+    options = takeTheEmptyOnes(game);
 
-    for(aux = chances; aux != NULL; aux = aux->next)
+    for(aux = options; aux != NULL; aux = aux->next)
     {
         game[aux->n] = 2;
         getChance(game, aux, 2);
         game[aux->n] = 0;
     }
 
-    chances = getGreaterChances(chances);
-    n = randomSelection(chances);
+    options = calculateChances(options);
+    options = getGreaterChances(options);
+    n = randomSelection(options);
 
-    freeList(chances);
+    freeList(options);
 
     return n;
 }

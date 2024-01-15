@@ -17,11 +17,17 @@
     	#define clear() system("cls")
     #endif
 
+    // main.c
     void draw(int [], int);
     int getPosition(int [], int);
     int isValid(int [], int);
-    int isThereWinner(int []);
+    int randomSelection(pList);
+    // ia.c
+    pList calculateChances(pList);
+    pList getGreaterChances(pList);
     pList takeTheEmptyOnes(int);
+    int canWinNextRound(int [], int);
+    int isThereWinner(int []);
     int winner(int [], int);
     void getChance(int [], pList, int);
     int getMove(int []);

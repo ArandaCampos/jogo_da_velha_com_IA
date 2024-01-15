@@ -55,6 +55,7 @@ pList insert(pList list, int n)
     new->n        = n;
     new->notLose  = 0.0;
     new->lose     = 0.0;
+    new->chance   = 0.0;
     new->next     = NULL;
 
     if(list == NULL) return new;
@@ -63,4 +64,12 @@ pList insert(pList list, int n)
     aux->next = new;
 
     return list;
+}
+
+int length(pList a){
+    int x = 0;
+
+    for (; a != NULL; a = a->next) x++;
+
+    return x;
 }
